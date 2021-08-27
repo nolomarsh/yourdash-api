@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +24,7 @@ public class ContactsApplication {
 		SpringApplication.run(ContactsApplication.class, args);
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/people")
 	public Iterable<Person> index() {
 		return personRepository.findAll();
