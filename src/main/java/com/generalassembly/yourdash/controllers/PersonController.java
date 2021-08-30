@@ -1,4 +1,4 @@
-package com.generalassembly.contacts.controllers;
+package com.generalassembly.yourdash.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,8 @@
 package com.generalassembly.yourdash.controllers;
 
 import java.util.Optional;
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import com.generalassembly.yourdash.entities.UserAccount;
 import com.generalassembly.yourdash.repositories.UserAccountRepository;
@@ -36,25 +40,44 @@ public class UserAccountController {
     @CrossOrigin
     @PostMapping("/users")
     public Iterable<UserAccount> create(@RequestBody UserAccount userData){
+        userData.setPassword(BCrypt.hashpw(userData.getPassword(), BCrypt.gensalt(10)));
         users.save(userData);
         return users.findAll();
+    }
+
+    @CrossOrigin
+    @PostMapping("/users/login")
+    public UserAccount login(@RequestBody HashMap<String,String> loginData){
+        List<UserAccount> foundList = users.findUserAccountByUsername(loginData.get("username"));
+        if (foundList.size() > 0) {
+            UserAccount foundUser = foundList.get(0);
+            if (BCrypt.checkpw(loginData.get("password"), foundUser.getPassword())){
+                return foundUser;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
     @CrossOrigin
     @PutMapping("/users/{id}")
     public Iterable<UserAccount> create(@RequestBody UserAccount fixUser, @PathVariable Integer id){
         users.findById(id).map(user -> {
-            user.setSubject(fixUser.getSubject());
-            user.setDetails(fixUser.getDetails());
+            user.setUsername(fixUser.getUsername());
+            user.setHomeAddress(fixUser.getHomeAddress());
             users.save(user);
             return user;
         });
+
+        return users.findAll();
     }
 
     @CrossOrigin
     @DeleteMapping("/users/{id}")
     public Iterable<UserAccount> destroy(@PathVariable Integer id){
         users.deleteById(id);
-        return users.findeAll();
+        return users.findAll();
     }
 }

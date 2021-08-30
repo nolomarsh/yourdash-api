@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+
+
 import com.generalassembly.yourdash.entities.Person;
 import com.generalassembly.yourdash.repositories.PersonRepository;
 
-@SpringBootApplication
-@RestController
+@SpringBootApplication(exclude={SecurityAutoConfiguration.class})
+// @RestController
 public class ContactsApplication {
 	@Autowired
 	private PersonRepository personRepository;
@@ -26,30 +29,30 @@ public class ContactsApplication {
 		SpringApplication.run(ContactsApplication.class, args);
 	}
 
-	@CrossOrigin(origins = {"http://localhost:3000"})
-	@GetMapping("/people")
-	public Iterable<Person> index() {
-		return personRepository.findAll();
-	}
-
-	@CrossOrigin(origins = {"http://localhost:3000"})
-	@PostMapping("/people")
-	public Iterable<Person> create (@RequestBody Person personData) {
-		personRepository.save(personData);
-		return personRepository.findAll();
-	}
-
-	@DeleteMapping("/people/{id}")
-	public Iterable<Person> delete(@PathVariable int id) {
-		personRepository.deleteById(id);
-		return personRepository.findAll();
-	}
-
-	@PutMapping("/people/{id}")
-	public Iterable<Person> update(@PathVariable int id, @RequestBody Person personData) {
-		personData.setId(id);
-		personRepository.save(personData);
-		return personRepository.findAll();
-	}
+	// @CrossOrigin(origins = {"http://localhost:3000"})
+	// @GetMapping("/people")
+	// public Iterable<Person> index() {
+	// 	return personRepository.findAll();
+	// }
+	//
+	// @CrossOrigin(origins = {"http://localhost:3000"})
+	// @PostMapping("/people")
+	// public Iterable<Person> create (@RequestBody Person personData) {
+	// 	personRepository.save(personData);
+	// 	return personRepository.findAll();
+	// }
+	//
+	// @DeleteMapping("/people/{id}")
+	// public Iterable<Person> delete(@PathVariable int id) {
+	// 	personRepository.deleteById(id);
+	// 	return personRepository.findAll();
+	// }
+	//
+	// @PutMapping("/people/{id}")
+	// public Iterable<Person> update(@PathVariable int id, @RequestBody Person personData) {
+	// 	personData.setId(id);
+	// 	personRepository.save(personData);
+	// 	return personRepository.findAll();
+	// }
 
 }
