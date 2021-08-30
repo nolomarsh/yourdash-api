@@ -1,4 +1,4 @@
-package com.generalassembly.contacts;
+package com.generalassembly.yourdash.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

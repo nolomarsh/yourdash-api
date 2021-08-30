@@ -1,7 +1,4 @@
-package com.generalassembly.contacts;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+package com.generalassembly.contacts.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,22 +11,21 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-@SpringBootApplication
+import com.generalassembly.yourdash.repositories.PersonRepository;
+import com.generalassembly.yourdash.entities.Person;
+
 @RestController
-public class ContactsApplication {
-	@Autowired
+public class PersonController {
+    @Autowired
 	private PersonRepository personRepository;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ContactsApplication.class, args);
-	}
-
-	@CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = {"http://localhost:3000","http://localhost:8080"})
 	@GetMapping("/people")
 	public Iterable<Person> index() {
 		return personRepository.findAll();
 	}
 
+	@CrossOrigin(origins = {"http://localhost:3000"})
 	@PostMapping("/people")
 	public Iterable<Person> create (@RequestBody Person personData) {
 		personRepository.save(personData);
@@ -48,5 +44,4 @@ public class ContactsApplication {
 		personRepository.save(personData);
 		return personRepository.findAll();
 	}
-
 }
