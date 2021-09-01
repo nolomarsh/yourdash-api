@@ -39,10 +39,10 @@ public class UserAccountController {
 
     @CrossOrigin
     @PostMapping("/users")
-    public Iterable<UserAccount> create(@RequestBody UserAccount userData){
+    public UserAccount create(@RequestBody UserAccount userData){
         userData.setPassword(BCrypt.hashpw(userData.getPassword(), BCrypt.gensalt(10)));
         users.save(userData);
-        return users.findAll();
+        return userData;
     }
 
     @CrossOrigin
@@ -63,15 +63,15 @@ public class UserAccountController {
 
     @CrossOrigin
     @PutMapping("/users/{id}")
-    public Iterable<UserAccount> create(@RequestBody UserAccount fixUser, @PathVariable Integer id){
-        users.findById(id).map(user -> {
+    public Optional<UserAccount> create(@RequestBody UserAccount fixUser, @PathVariable Integer id){
+        Optional<UserAccount> fixedUser = users.findById(id).map(user -> {
             user.setUsername(fixUser.getUsername());
             user.setHomeAddress(fixUser.getHomeAddress());
             users.save(user);
             return user;
         });
 
-        return users.findAll();
+        return fixedUser;
     }
 
     @CrossOrigin
