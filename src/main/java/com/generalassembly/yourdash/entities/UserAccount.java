@@ -4,16 +4,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Column;
 
 @Entity
 public class UserAccount {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-
+    @Column(unique=true, nullable=false)
     private String username;
+    @Column(nullable=false)
     private String password;
-    private String homeAddress;
+    private String streetAddress;
+    @Column(nullable=false)
+    private String zipCode;
 
     public Integer getId() {
         return this.id;
@@ -24,8 +28,11 @@ public class UserAccount {
     public String getPassword(){
         return this.password;
     }
-    public String getHomeAddress(){
-        return this.homeAddress;
+    public String getStreetAddress(){
+        return this.streetAddress;
+    }
+    public String getZipCode(){
+        return this.zipCode;
     }
 
     public void setId(Integer id){
@@ -37,7 +44,10 @@ public class UserAccount {
     public void setPassword(String password){
         this.password = password;
     }
-    public void setHomeAddress(String homeAddress){
-        this.homeAddress = homeAddress;
+    public void setStreetAddress(String streetAddress){
+        this.streetAddress = streetAddress;
+    }
+    public void setZipCode(String zipCode){
+        this.zipCode = zipCode;
     }
 }

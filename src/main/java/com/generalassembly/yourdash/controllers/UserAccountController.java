@@ -66,7 +66,8 @@ public class UserAccountController {
     public Optional<UserAccount> create(@RequestBody UserAccount fixUser, @PathVariable Integer id){
         Optional<UserAccount> fixedUser = users.findById(id).map(user -> {
             user.setUsername(fixUser.getUsername());
-            user.setHomeAddress(fixUser.getHomeAddress());
+            user.setStreetAddress(fixUser.getStreetAddress());
+            user.setZipCode(fixUser.getZipCode());
             users.save(user);
             return user;
         });
