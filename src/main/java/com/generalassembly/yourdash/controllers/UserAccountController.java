@@ -67,7 +67,7 @@ public class UserAccountController {
         Optional<UserAccount> fixedUser = users.findById(id).map(user -> {
             user.setUsername(fixUser.getUsername());
             user.setStreetAddress(fixUser.getStreetAddress());
-            user.setZipCode(fixUser.getZipCode());
+            // user.setZipCode(fixUser.getZipCode());
             users.save(user);
             return user;
         });

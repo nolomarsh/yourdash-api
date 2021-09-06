@@ -15,9 +15,9 @@ public class UserAccount {
     private String username;
     @Column(nullable=false)
     private String password;
-    private String streetAddress;
     @Column(nullable=false)
-    private String zipCode;
+    private String streetAddress;
+    // private String zipCode;
 
     public Integer getId() {
         return this.id;
@@ -31,9 +31,9 @@ public class UserAccount {
     public String getStreetAddress(){
         return this.streetAddress;
     }
-    public String getZipCode(){
-        return this.zipCode;
-    }
+    // public String getZipCode(){
+    //     return this.zipCode;
+    // }
 
     public void setId(Integer id){
         this.id = id;
@@ -47,7 +47,7 @@ public class UserAccount {
     public void setStreetAddress(String streetAddress){
         this.streetAddress = streetAddress;
     }
-    public void setZipCode(String zipCode){
-        this.zipCode = zipCode;
-    }
+    // public void setZipCode(String zipCode){
+    //     this.zipCode = zipCode;
+    // }
 }
